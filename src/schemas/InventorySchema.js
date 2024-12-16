@@ -5,4 +5,8 @@ export const inventorySchema = yup.object().shape({
     Quantity: yup.number().positive().integer().required("Required"),
     costPrice: yup.number().positive().required("Required"),
     salesPrice: yup.number().positive().integer().required("Required"),
+    category: yup
+        .string()
+        .oneOf(["books", "food", "cloth", "other"], "Invalid Job Type")
+        .required("Required"),
 });

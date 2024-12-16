@@ -1,4 +1,5 @@
 .input_box {
+  width: min(510px, 100%);
   height: 62px;
   border-radius: 10px;
   border-width: 2px 2px;
@@ -6,6 +7,10 @@
   margin-top: 30px;
   position: relative;
   padding: 12px 20px;
+}
+
+.rows {
+  width: 162px !important;
 }
 
 .input_box input {

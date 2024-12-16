@@ -2,6 +2,7 @@
 export const content = ["./src/**/*.{html,js}"];
 export const theme = {
   extend: {
+
     fontFamily: {
       inter: ["Inter", "sans-serif"]
     },
