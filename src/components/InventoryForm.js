@@ -14,10 +14,10 @@ const InventoryForm = () => {
     if (!isFormVisible) { return null; }
 
     return (
-        <div className="fixed inset-0 flex bg-opacity-30 justify-center items-center backdrop-blur-sm">
-            <div>
+        <div className="fixed inset-0 flex bg-opacity-30 justify-center items-center bg-black backdrop-blur-sm">
+            <div className="bg-white rounded-[10px] pb-10">
                 <div className="flex justify-center">
-                    <div className="w-[574px] py-[5px] px-8 flex justify-between items-center">
+                    <div className="w-[574px] py-[5px] px-8 flex justify-between items-center border-b-[1px] border-[#F2F4F7]">
                         <h2 className="text-darkBlue text-xs font-semibold">New inventory stock entry</h2>
                         <button type="button" onClick={hideForm} className="w-[18px] h-[18px]"><img src={cancel} alt="cancel button" /></button>
                     </div>
@@ -68,7 +68,11 @@ const InventoryForm = () => {
                                 </CustomSelect>
                                 <CustomUpload name="file" /> {/* No need to pass value='' */}
 
+                                <div className="flex justify-end items-center px-8 gap-[16px] mt-16">
 
+                                    <button type="button" onClick={hideForm} className="w-[114px] h-[35px] ml-2 bg-w text-[#47505B] font-medium  hover:bg-gray-400 transition-all duration-300">Cancel</button>
+                                    <button type="submit" className="w-[114px] h-[35px] bg-darkBlue text-white font-medium rounded-[5px] hover:bg-darkBlue-dark transition-all duration-300">Save</button>
+                                </div>
                             </Form>
                         )}
                     </Formik>

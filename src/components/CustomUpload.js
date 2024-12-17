@@ -5,6 +5,8 @@ const CustomUpload = ({ label, ...props }) => {
     const [field, meta] = useField(props);
     const { setFieldValue } = useFormikContext();  // Get Formik's setFieldValue method
     const [fileName, setFileName] = useState('');
+    const [imagePreview, setImagePreview] = useState(null); // State to store the image preview
+
 
 
     // Function to validate the file size
@@ -37,6 +39,9 @@ const CustomUpload = ({ label, ...props }) => {
                 // Set the selected file in Formik state
                 setFieldValue(field.name, file);
                 setFileName(file.name); // Update state with file name to display
+                // Create a preview URL for the image
+                const previewUrl = URL.createObjectURL(file);
+                setImagePreview(previewUrl);
 
             } else {
                 e.target.value = null; // Reset the file input if validation fails
@@ -70,8 +75,14 @@ const CustomUpload = ({ label, ...props }) => {
 
             </div>
             {fileName && (
-                <div className="mt-2 text-sm text-green-700">
+                <div className="m-auto mt-2 w-[510px] text-sm text-green-700">
                     <strong>Uploaded File:</strong> {fileName}
+                </div>
+            )}
+            {/* Show image preview after file is selected */}
+            {imagePreview && (
+                <div className="flex justify-center items-end h-[154px] mt-2 w-[510px]">
+                    <img src={imagePreview} alt="File Preview" className="w-[100px] h-[100px] object-cover rounded-lg" />
                 </div>
             )}
             {meta.error && (
