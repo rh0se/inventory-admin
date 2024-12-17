@@ -42,9 +42,10 @@ select.input-error {
 }
 
 .error {
+  width: min(510px, 90%);
   color: hsl(0 100% 50%);
   font-weight: 700;
   font-size: 0.75rem;
   text-align: left;
-  margin-top: 0.25rem;
+  margin: 0.25rem auto 0;
 }
