@@ -1,10 +1,14 @@
 import React from 'react'
+import { useFormContext } from '../FormContext';
 import DataTable from 'react-data-table-component';
 import edit from "../images/edit-2.png"
 import trash from "../images/trash.png"
 
 const AdminTable = () => {
+    const { showForm } = useFormContext();
+
     const columns = [
+
         {
             name: 'S/N',
             selector: row => row.sn,
@@ -61,7 +65,7 @@ const AdminTable = () => {
                     <input placeholder='Search...' type='text' className='py-2.5 px-4 rounded-md w-[306px] border-[1px] border-lightgrayBlue placeholder:text-DarkGrey placeholder:text-sm'></input>
                     <button style={{ border: "0.5px solid rgba(33, 56, 153, 0.6)", boxShadow: "0px 0px 6px 0px rgba(33, 56, 153, 0.16)" }} type='submit' className='py-2 px-[30px] rounded-md text-darkBlue text-sm'>Search</button>
                 </form>
-                <button style={{ border: "0.5px solid rgba(33, 56, 153, 0.6)", boxShadow: "0px 0px 6px 0px rgba(33, 56, 153, 0.16)" }} type='submit' className='py-2 px-[30px] rounded-md text-darkBlue text-sm'>Add item</button>
+                <button style={{ border: "0.5px solid rgba(33, 56, 153, 0.6)", boxShadow: "0px 0px 6px 0px rgba(33, 56, 153, 0.16)" }} type='submit' className='py-2 px-[30px] rounded-md text-darkBlue text-sm' onClick={showForm}>Add item</button>
             </div>
         </div>
     )

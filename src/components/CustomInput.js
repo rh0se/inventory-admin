@@ -5,8 +5,8 @@ const CustomInput = ({ label, ...props }) => {
     return (
         <>
             <div className="flex flex-col">
-                <div className="input_box">
-                    <input {...field} {...props} className={meta.touched && meta.error ? "input-error" : ""} />
+                <div className={`input_box`}>
+                    <input {...field} {...props} className={meta.touched && meta.error ? "" : ""} />
                     <label>{label}</label>
                 </div>
                 <div className="error block"><ErrorMessage className="error text-green" name={field.name} />

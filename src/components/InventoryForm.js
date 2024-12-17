@@ -1,27 +1,44 @@
 import { Formik, Form, useFormik } from "formik";
 import CustomInput from "./CustomInput";
 import CustomSelect from "./CustomSelect";
-import { inventorySchema } from "../schemas/InventorySchema";
+import CustomUpload from "./CustomUpload";
+import { useFormContext } from "../FormContext";
+import { inventorySchema, fileSchema } from "../schemas/InventorySchema";
 import React from 'react'
+import cancel from "../images/x.png"
+
+const formSchema = inventorySchema.concat(fileSchema);
 
 const InventoryForm = () => {
+    const { isFormVisible, hideForm } = useFormContext();
+    if (!isFormVisible) { return null; }
+
     return (
         <>
+            <div className="flex justify-center">
+                <div className="w-[574px] py-[5px] px-8 flex justify-between items-center">
+                    <h2 className="text-darkBlue text-xs font-semibold">New inventory stock entry</h2>
+                    <button type="button" onClick={hideForm} className="w-[18px] h-[18px]"><img src={cancel} alt="cancel button" /></button>
+                </div>
+            </div>
             <div className="flex justify-center items-center">
+
                 <Formik initialValues={{
                     name: "",
                     Quantity: "",
                     costPrice: "",
                     salesPrice: "",
-                }} validationSchema={inventorySchema}>
+                    category: "",
+                    file: null,
+                }} validationSchema={formSchema}>
                     {({ props }) => (
-                        <Form className="w-[574px]">
+                        <Form className="w-[574px] m-auto">
                             <CustomInput
                                 label="Product/service name"
                                 name="name"
                                 type="text"
                             />
-                            <div class="grid grid-cols-3 w-[510px] gap-3 justify-between mb-2">
+                            <div class="grid grid-cols-3 w-[510px] gap-3 justify-between m-auto mb-2">
                                 <CustomInput
                                     label="Quantity"
                                     name="Quantity"
@@ -48,6 +65,8 @@ const InventoryForm = () => {
                                 <option value="clothes">Clothes</option>
                                 <option value="other">Other</option>
                             </CustomSelect>
+                            <CustomUpload name="file" /> {/* No need to pass value='' */}
+
 
                         </Form>
                     )}

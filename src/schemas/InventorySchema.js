@@ -10,3 +10,22 @@ export const inventorySchema = yup.object().shape({
         .oneOf(["books", "food", "cloth", "other"], "Invalid Job Type")
         .required("Required"),
 });
+
+export const fileSchema = yup.object().shape({
+    file: yup.mixed().required('File is required')
+        .test('fileFormat', 'Only jpg, jpeg, png files are allowed', value => {
+            if (value && value.name) { // Ensure `value` and `value.name` are defined
+                const supportedFormats = ['jpg', 'jpeg', 'png'];
+                const fileExtension = value.name.split('.').pop().toLowerCase();
+                return supportedFormats.includes(fileExtension);
+            }
+            return false; // Return false if no file or invalid file object
+        })
+        .test('fileSize', 'File size must not be more than 15MB', value => {
+            if (value && value.size) { // Ensure `value` and `value.size` are defined
+                const maxSize = 15 * 1024 * 1024;  // 15MB in bytes
+                return value.size <= maxSize;
+            }
+            return false; // Return false if no file or invalid file object
+        }),
+})
