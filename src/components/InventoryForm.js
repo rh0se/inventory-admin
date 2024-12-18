@@ -2,16 +2,14 @@ import { Formik, Form, useFormik } from "formik";
 import CustomInput from "./CustomInput";
 import CustomSelect from "./CustomSelect";
 import CustomUpload from "./CustomUpload";
-import { useFormContext } from "../FormContext";
-import { useTableData } from "../TableContext";
 import { inventorySchema, fileSchema } from "../schemas/InventorySchema";
 import React from 'react'
 import cancel from "../images/x.png"
 
 const formSchema = inventorySchema.concat(fileSchema);
 
-const InventoryForm = () => {
-    const { addEntry } = useTableData();
+const InventoryForm = ({ setTableData, toggleForm, handleSubmit, editData }) => {
+
     const generateSku = () => {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         let result = '';
@@ -20,42 +18,36 @@ const InventoryForm = () => {
         }
         return result;
     };
-    const { isFormVisible, hideForm } = useFormContext();
-    if (!isFormVisible) { return null; }
-
     return (
         <div className="fixed z-50 inset-0 flex bg-opacity-30 justify-center items-center bg-black backdrop-blur-sm">
             <div className="bg-white rounded-[10px] pb-10">
                 <div className="flex justify-center">
                     <div className="w-[574px] py-[5px] px-8 flex justify-between items-center border-b-[1px] border-[#F2F4F7]">
                         <h2 className="text-darkBlue text-xs font-semibold">New inventory stock entry</h2>
-                        <button type="button" onClick={hideForm} className="w-[18px] h-[18px]"><img src={cancel} alt="cancel button" /></button>
+                        <button type="button" onClick={toggleForm} className="w-[18px] h-[18px]"><img src={cancel} alt="cancel button" /></button>
                     </div>
                 </div>
                 <div className="flex justify-center items-center">
 
-                    <Formik initialValues={{
-                        name: "",
-                        qty: "",
-                        costPrice: "",
-                        salesPrice: "",
-                        category: "",
-                        file: null,
-                    }} validationSchema={formSchema}
-                        onSubmit={
-                            (values, { resetForm }) => {
-                                addEntry({
-                                    sku: generateSku(),
-                                    name: values.name,
-                                    qty: values.qty,
-                                    stockDate: new Date().toLocaleString,
-                                    costPrice: values.costPrice,
-                                    salesPrice: values.salesPrice,
-                                    category: values.category,
-                                });
-                                resetForm();
-                            }
-                        }>
+                    <Formik
+                        initialValues={{
+                            name: editData?.name || "",
+                            qty: editData?.qty || "",
+                            costPrice: editData?.costPrice || "",
+                            salesPrice: editData?.salesPrice || "",
+                            category: editData?.category || "",
+                            file: null,
+                        }}
+                        validationSchema={formSchema}
+                        onSubmit={(values, { resetForm }) => {
+                            handleSubmit({
+                                ...values,
+                                stockDate: editData ? editData.stockDate : new Date().toLocaleString(),
+                                sku: editData ? editData.sku : generateSku(),
+                            });
+                            resetForm();
+                        }}
+                    >
                         {({ props }) => (
                             <Form className="w-[574px] m-auto">
                                 <div className="w-[510px] m-auto">
@@ -97,7 +89,7 @@ const InventoryForm = () => {
 
                                 <div className="flex justify-end items-center px-8 gap-[16px] mt-16">
 
-                                    <button type="button" onClick={hideForm} className="w-[114px] h-[35px] ml-2 bg-w text-[#47505B] font-medium  hover:bg-gray-400 transition-all duration-300">Cancel</button>
+                                    <button type="button" className="w-[114px] h-[35px] ml-2 bg-w text-[#47505B] font-medium  hover:bg-gray-400 transition-all duration-300" onClick={toggleForm}>Cancel</button>
                                     <button type="submit" className="w-[114px] h-[35px] bg-darkBlue text-white font-medium rounded-[5px] hover:bg-darkBlue-dark transition-all duration-300">Save</button>
                                 </div>
                             </Form>
@@ -105,7 +97,7 @@ const InventoryForm = () => {
                     </Formik>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

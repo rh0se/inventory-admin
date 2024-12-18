@@ -7,12 +7,12 @@ export const inventorySchema = yup.object().shape({
     salesPrice: yup.number().positive().integer().required("Required"),
     category: yup
         .string()
-        .oneOf(["books", "food", "cloth", "other"], "Invalid Job Type")
+        .oneOf(["books", "food", "clothes", "other"], "Invalid Job Type")
         .required("Required"),
 });
 
 export const fileSchema = yup.object().shape({
-    file: yup.mixed()
+    file: yup.mixed().nullable()
         .test('fileFormat', 'Only jpg, jpeg, png files are allowed', value => {
             if (value && value.name) { // Ensure `value` and `value.name` are defined
                 const supportedFormats = ['jpg', 'jpeg', 'png'];
