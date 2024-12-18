@@ -2,7 +2,7 @@ import * as yup from 'yup';
 
 export const inventorySchema = yup.object().shape({
     name: yup.string().min(2).required("Required"),
-    Quantity: yup.number().positive().integer().required("Required"),
+    qty: yup.number().positive().integer().required("Required"),
     costPrice: yup.number().positive().required("Required"),
     salesPrice: yup.number().positive().integer().required("Required"),
     category: yup
@@ -12,7 +12,7 @@ export const inventorySchema = yup.object().shape({
 });
 
 export const fileSchema = yup.object().shape({
-    file: yup.mixed().required('File is required')
+    file: yup.mixed()
         .test('fileFormat', 'Only jpg, jpeg, png files are allowed', value => {
             if (value && value.name) { // Ensure `value` and `value.name` are defined
                 const supportedFormats = ['jpg', 'jpeg', 'png'];

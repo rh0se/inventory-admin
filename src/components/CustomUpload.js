@@ -52,7 +52,7 @@ const CustomUpload = ({ label, ...props }) => {
 
     return (
         <>
-            <div className="flex items-center justify-center w-full text-DarkGrey">
+            <div className="flex items-center mt-8 justify-center w-full text-DarkGrey">
                 <label
                     htmlFor={field.name}  // Ensure the correct id is used
                     className="flex flex-col items-center justify-center w-[510px] h-[91px] border-2 border-darkBlue border-dashed rounded-lg cursor-pointer bg-[#F4F6FF]"

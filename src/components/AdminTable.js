@@ -1,17 +1,69 @@
 import React from 'react'
 import { useFormContext } from '../FormContext';
+import { useTableData } from '../TableContext';
 import DataTable from 'react-data-table-component';
 import edit from "../images/edit-2.png"
 import trash from "../images/trash.png"
 
+const customStyles = {
+    rows: {
+        style: {
+            backgroundColor: 'white',
+            textAlign: 'center',
+            height: '66px', // override the row height
+        },
+    },
+    headCells: {
+        style: {
+            padding: '16px 24px', // override the cell padding for head cell
+            color: '#121F3E',
+            width: 'auto',
+            textAlign: 'center',
+            'WhiteSpace': 'nowrap',
+            fontWeight: '600',
+            color: 'red'
+        },
+    },
+    cells: {
+        style: {
+            textAlign: 'center',
+
+            backgroundColor: 'white',
+            overflow: "visible",
+            textOverflow: "unset",
+            width: '2px',
+            borderBottom: '1px solid #EAEBF0',
+
+        },
+    },
+    headRow: {
+        style: {
+            color: "red"
+        }
+    },
+
+};
 const AdminTable = () => {
-    const { showForm } = useFormContext();
+    const { showForm, setFormData } = useFormContext();
+    const { tableData } = useTableData();
+
+    const handleEdit = (row) => {
+        setFormData({
+            name: row.name,
+            qty: row.qty,
+            costPrice: row.costPrice,
+            salesPrice: row.salesPrice,
+            category: row.category,
+        });
+        showForm(); // Opens the form
+    };
 
     const columns = [
 
         {
             name: 'S/N',
             selector: row => row.sn,
+
         },
         {
             name: 'SKU',
@@ -24,6 +76,11 @@ const AdminTable = () => {
         {
             name: 'Cost Price',
             selector: row => row.costPrice,
+            style: {
+                textAlign: 'center',
+                width: 'auto',
+                whiteSpace: "nowrap",
+            }
         },
         {
             name: 'Sales Price',
@@ -35,10 +92,12 @@ const AdminTable = () => {
         },
         {
             name: "Stock Date",
+            wrap: false,
             selector: row => row.stockDate,
         },
         {
             name: "Category",
+            wrap: false,
             selector: row => row.category,
         },
         {
@@ -47,8 +106,8 @@ const AdminTable = () => {
             sortable: false,
             cell: row => (
                 <div className='flex gap-2'>
-                    <button className='py-1 px-2 text-xs text-darkBlue rounded-md'>
-                        <img src={edit} alt="Edit" className='w-[16px] h-[16px]' />
+                    <button className='text-darkBlue rounded-md'>
+                        <img src={edit} alt="Edit" onClick={handleEdit(row)} className='w-[16px] h-[16px]' />
                     </button>
                     <button className='py-1 px-2 text-xs text-red rounded-md'>
                         <img src={trash} alt="Delete" className='w-[16px] h-[16px]' />
@@ -67,6 +126,33 @@ const AdminTable = () => {
                 </form>
                 <button style={{ border: "0.5px solid rgba(33, 56, 153, 0.6)", boxShadow: "0px 0px 6px 0px rgba(33, 56, 153, 0.16)" }} type='submit' className='py-2 px-[30px] rounded-md text-darkBlue text-sm' onClick={showForm}>Add item</button>
             </div>
+            <DataTable
+                customStyles={customStyles}
+                columns={columns}
+                data={tableData}
+                defaultSortField="sn"
+                defaultSortAsc={true}
+                pagination
+                noDataComponent="No data found"
+                paginationRowsPerPageOptions={[13, 20, 27]}
+                fixedHeader
+                fixedFooter
+                responsive={true}
+                onRowClick={(row) => console.log('You clicked row:', row)}
+                striped
+                highlightOnHover
+                persistTableHead
+                dense
+                paginationComponentOptions={{
+                    rowsPerPageText: 'Rows per page:',
+                    ofText: 'of',
+                    firstTooltip: 'First page',
+                    lastTooltip: 'Last page',
+                    nextTooltip: 'Next page',
+                    previousTooltip: 'Previous page',
+                    pageText: 'Page',
+                }}
+            />
         </div>
     )
 }

@@ -3,6 +3,7 @@ import CustomInput from "./CustomInput";
 import CustomSelect from "./CustomSelect";
 import CustomUpload from "./CustomUpload";
 import { useFormContext } from "../FormContext";
+import { useTableData } from "../TableContext";
 import { inventorySchema, fileSchema } from "../schemas/InventorySchema";
 import React from 'react'
 import cancel from "../images/x.png"
@@ -10,11 +11,20 @@ import cancel from "../images/x.png"
 const formSchema = inventorySchema.concat(fileSchema);
 
 const InventoryForm = () => {
+    const { addEntry } = useTableData();
+    const generateSku = () => {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+        for (let i = 0; i < 10; i++) {
+            result += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        return result;
+    };
     const { isFormVisible, hideForm } = useFormContext();
     if (!isFormVisible) { return null; }
 
     return (
-        <div className="fixed inset-0 flex bg-opacity-30 justify-center items-center bg-black backdrop-blur-sm">
+        <div className="fixed z-50 inset-0 flex bg-opacity-30 justify-center items-center bg-black backdrop-blur-sm">
             <div className="bg-white rounded-[10px] pb-10">
                 <div className="flex justify-center">
                     <div className="w-[574px] py-[5px] px-8 flex justify-between items-center border-b-[1px] border-[#F2F4F7]">
@@ -26,23 +36,40 @@ const InventoryForm = () => {
 
                     <Formik initialValues={{
                         name: "",
-                        Quantity: "",
+                        qty: "",
                         costPrice: "",
                         salesPrice: "",
                         category: "",
                         file: null,
-                    }} validationSchema={formSchema}>
+                    }} validationSchema={formSchema}
+                        onSubmit={
+                            (values, { resetForm }) => {
+                                addEntry({
+                                    sku: generateSku(),
+                                    name: values.name,
+                                    qty: values.qty,
+                                    stockDate: new Date().toLocaleString,
+                                    costPrice: values.costPrice,
+                                    salesPrice: values.salesPrice,
+                                    category: values.category,
+                                });
+                                resetForm();
+                            }
+                        }>
                         {({ props }) => (
                             <Form className="w-[574px] m-auto">
-                                <CustomInput
-                                    label="Product/service name"
-                                    name="name"
-                                    type="text"
-                                />
+                                <div className="w-[510px] m-auto">
+                                    <CustomInput
+                                        label="Product/service name"
+                                        name="name"
+                                        type="text"
+                                    />
+                                </div>
+
                                 <div class="grid grid-cols-3 w-[510px] gap-3 justify-between m-auto mb-2">
                                     <CustomInput
                                         label="Quantity"
-                                        name="Quantity"
+                                        name="qty"
                                         type="number"
                                     />
                                     <CustomInput
