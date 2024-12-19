@@ -42,8 +42,11 @@ const InventoryForm = ({ setTableData, toggleForm, handleSubmit, editData }) => 
                         onSubmit={(values, { resetForm }) => {
                             handleSubmit({
                                 ...values,
+                                costPrice: "£" + values.costPrice + ".00",
+                                salesPrice: "£" + values.salesPrice + ".00",
                                 stockDate: editData ? editData.stockDate : new Date().toLocaleString(),
                                 sku: editData ? editData.sku : generateSku(),
+
                             });
                             resetForm();
                         }}

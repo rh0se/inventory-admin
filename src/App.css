@@ -58,3 +58,52 @@ select.input-error {
 .dQcPXM {
   flex: 0;
 }
+
+.custom-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.custom-pagination-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #e5ebf0;
+  border-radius: 4px;
+  background-color: white;
+  aspect-ratio: 1;
+  width: 28px;
+  height: 26px;
+  color: #576378;
+}
+
+.custom-pagination-page.selected {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.custom-pagination-previous,
+.custom-pagination-next {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  aspect-ratio: 1;
+  width: 26px;
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 2rem;
+}
+
+.custom-pagination-previous.disabled,
+.custom-pagination-next.disabled {
+  background-color: var(--lightGray);
+}
+
+.active {
+  background-color: #213899;
+  color: white;
+}

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import Pagination from './CustomPagination';
 import DataTable from 'react-data-table-component';
 import edit from "../images/edit-2.png"
 import trash from "../images/trash.png"
@@ -7,25 +8,25 @@ const customStyles = {
     rows: {
         style: {
             backgroundColor: 'white',
-            textAlign: 'center',
+            textAlign: 'left',
             height: '66px', // override the row height
         },
     },
     headCells: {
         style: {
+            justifyContent: 'center',
+            textAlign: 'center',
+
             padding: '16px 24px', // override the cell padding for head cell
             color: '#121F3E',
-            width: 'auto',
-            textAlign: 'center',
             'WhiteSpace': 'nowrap',
             fontWeight: '600',
-            color: 'red'
         },
     },
     cells: {
         style: {
             textAlign: 'center',
-
+            justifyContent: 'center',
             backgroundColor: 'white',
             overflow: "visible",
             textOverflow: "unset",
@@ -34,9 +35,43 @@ const customStyles = {
 
         },
     },
+    pagination: {
+        style: {
+            color: '#576378',
+            fontSize: '13px',
+            minHeight: '56px',
+
+            borderTopStyle: 'solid',
+            borderTopWidth: '1px'
+        },
+        pageButtonsStyle: {
+            borderRadius: '50%',
+            height: '40px',
+            width: '40px',
+            padding: '8px',
+            margin: 'px',
+            cursor: 'pointer',
+            transition: '0.4s',
+            color: '',
+            fill: '',
+            backgroundColor: 'transparent',
+            '&:disabled': {
+                cursor: 'unset',
+                color: '',
+                fill: '',
+            },
+            '&:hover:not(:disabled)': {
+                backgroundColor: '',
+            },
+            '&:focus': {
+                outline: 'none',
+                backgroundColor: '',
+            },
+        },
+    },
     headRow: {
         style: {
-            color: "red"
+            height: '64px', // override the row height
         }
     },
 
@@ -48,11 +83,13 @@ const AdminTable = ({ tableData, handleDelete, toggleForm, handleEdit }) => {
         {
             name: 'S/N',
             selector: row => row.sn,
-
+            width: "70px",
+            compact: true,
         },
         {
             name: 'SKU',
             selector: row => row.sku,
+            grow: 1.5,
         },
         {
             name: 'Name',
@@ -61,11 +98,6 @@ const AdminTable = ({ tableData, handleDelete, toggleForm, handleEdit }) => {
         {
             name: 'Cost Price',
             selector: row => row.costPrice,
-            style: {
-                textAlign: 'center',
-                width: 'auto',
-                whiteSpace: "nowrap",
-            }
         },
         {
             name: 'Sales Price',
@@ -79,6 +111,7 @@ const AdminTable = ({ tableData, handleDelete, toggleForm, handleEdit }) => {
             name: "Stock Date",
             wrap: false,
             selector: row => row.stockDate,
+            grow: 2,
         },
         {
             name: "Category",
@@ -120,8 +153,9 @@ const AdminTable = ({ tableData, handleDelete, toggleForm, handleEdit }) => {
                 defaultSortField="sn"
                 defaultSortAsc={true}
                 pagination
+                paginationComponent={Pagination}
                 noDataComponent="No data found"
-                paginationRowsPerPageOptions={[13, 20, 27]}
+                // paginationRowsPerPageOptions={[13, 20, 27]}
                 fixedHeader
                 fixedFooter
                 responsive={true}
@@ -130,15 +164,16 @@ const AdminTable = ({ tableData, handleDelete, toggleForm, handleEdit }) => {
                 highlightOnHover
                 persistTableHead
                 dense
-                paginationComponentOptions={{
-                    rowsPerPageText: 'Rows per page:',
-                    ofText: 'of',
-                    firstTooltip: 'First page',
-                    lastTooltip: 'Last page',
-                    nextTooltip: 'Next page',
-                    previousTooltip: 'Previous page',
-                    pageText: 'Page',
-                }}
+            // paginationComponentOptions={{
+            //     rowsPerPageText: 'show',
+            //     rangeSeparatorText: 'enteries per page',
+            //     ofText: 'of',
+            //     firstTooltip: 'First page',
+            //     lastTooltip: 'Last page',
+            //     nextTooltip: 'Next page',
+            //     previousTooltip: 'Previous page',
+            //     pageText: 'Page',
+            // }}
             />
         </div>
     )
