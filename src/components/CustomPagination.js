@@ -3,7 +3,7 @@ import ReactPaginate from "react-paginate";
 import next from '../images/next.png';
 
 
-const Pagination = ({ rowCount, rowsPerPageOptions = [5, 10, 15, 20], onChangePage, onChangeRowsPerPage }) => {
+const Pagination = ({ rowCount, rowsPerPageOptions = [13, 26,], onChangePage, onChangeRowsPerPage }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
 
@@ -25,17 +25,17 @@ const Pagination = ({ rowCount, rowsPerPageOptions = [5, 10, 15, 20], onChangePa
     };
 
     return (
-        <div className="flex justify-between items-center gap-4 mt-4">
+        <div className="flex justify-between text-[#576378] items-center gap-4 mt-4">
             {/* Rows Per Page */}
             <div className="flex items-center gap-2">
-                <label htmlFor="rowsPerPage" className="text-sm text-gray-700">
+                <label htmlFor="rowsPerPage" className="text-sm">
                     Show
                 </label>
                 <select
                     id="rowsPerPage"
                     value={rowsPerPage}
                     onChange={handleRowsPerPageChange}
-                    className="border px-2 py-1 rounded text-sm"
+                    className="border border-[#E5EBF0] px-2 py-1  text-xs rounded"
                 >
                     {rowsPerPageOptions.map((option) => (
                         <option key={option} value={option}>
@@ -43,22 +43,37 @@ const Pagination = ({ rowCount, rowsPerPageOptions = [5, 10, 15, 20], onChangePa
                         </option>
                     ))}
                 </select>
-                <span className="text-sm text-gray-700">entries per page</span>
+                <span className="text-sm">entries per page</span>
             </div>
 
             {/* Page Navigation */}
-            <ReactPaginate
-                previousLabel={<img src={next} className="rotate-180 text-[#6D7D93]" />}
-                breakLabel="..."
-                nextLabel={<img src={next} className="text-[#6D7D93]" />}
-                pageCount={totalPages}
-                onPageChange={handlePageChange}
-                activeClassName={"active"}
-                containerClassName="custom-pagination"
-                pageClassName="custom-pagination-page"
-                previousClassName="custom-pagination-previous"
-                nextClassName="custom-pagination-next"
-            />
+            <div className="flex">
+                <button onClick={() => handlePageChange(1)}
+                    disabled={currentPage === 1} // Disable on the first page
+                    className={`text-xs bg-white border border-[#E5EBF0] px-2 text-[#576378] rounded ${currentPage === 1 ? "" : ""
+                        }`}>First</button>
+                <ReactPaginate
+                    previousLabel={<img src={next} className={`rotate-180 ${currentPage === 1 ? "pagination-disabled" : "text-[#6D7D93]"}`} />}
+                    breakLabel="..."
+                    nextLabel={<img src={next} className={`${currentPage === totalPages ? "pagination-disabled" : "text-[#6D7D93]"}`} />}
+                    pageCount={totalPages}
+                    onPageChange={handlePageChange}
+                    pageRangeDisplayed={2}
+                    marginPagesDisplayed={2}
+                    activeClassName={"active"}
+                    containerClassName="custom-pagination"
+                    pageClassName="custom-pagination-page"
+                    previousClassName="custom-pagination-previous"
+                    nextClassName="custom-pagination-next"
+                    disabledClassName={"pagination-disabled"} // This handles disabling behavior for prev/next
+
+
+                />
+                <button onClick={() => handlePageChange(1)}
+                    disabled={currentPage === totalPages} // Disable on the first page
+                    className={`text-xs bg-white border border-[#E5EBF0] px-2 text-[#576378] rounded ${currentPage === totalPages ? "" : ""
+                        }`}>Last</button>
+            </div>
             {/* <div className="flex items-center gap-2">
                 <button
                     onClick={() => handlePageChange(currentPage - 1)}

@@ -139,7 +139,7 @@ const AdminTable = ({ tableData, handleDelete, toggleForm, handleEdit }) => {
     ];
     return (
         <div className='w-full px-8 pt-28 bg-LightGrayishBlue'>
-            <div className='flex justify-between'>
+            <div className='flex justify-between mb-10'>
                 <form className='flex gap-3'>
                     <input placeholder='Search...' type='text' className='py-2.5 px-4 rounded-md w-[306px] border-[1px] border-lightgrayBlue placeholder:text-DarkGrey placeholder:text-sm'></input>
                     <button style={{ border: "0.5px solid rgba(33, 56, 153, 0.6)", boxShadow: "0px 0px 6px 0px rgba(33, 56, 153, 0.16)" }} type='submit' className='py-2 px-[30px] rounded-md text-darkBlue text-sm'>Search</button>

@@ -80,6 +80,11 @@ select.input-error {
   color: #576378;
 }
 
+.pagination-disabled {
+  cursor: not-allowed;
+  color: #dadada;
+}
+
 .custom-pagination-page.selected {
   background-color: var(--color-primary);
   color: white;
