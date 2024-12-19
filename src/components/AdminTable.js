@@ -97,11 +97,11 @@ const AdminTable = ({ tableData, handleDelete, toggleForm, handleEdit }) => {
         },
         {
             name: 'Cost Price',
-            selector: row => row.costPrice,
+            selector: row => `$${row.costPrice}`,
         },
         {
             name: 'Sales Price',
-            selector: row => row.salesPrice,
+            selector: row => `$${row.salesPrice}`,
         },
         {
             name: 'Qty',
@@ -138,13 +138,13 @@ const AdminTable = ({ tableData, handleDelete, toggleForm, handleEdit }) => {
         }
     ];
     return (
-        <div className='w-full px-8 pt-28 bg-LightGrayishBlue'>
-            <div className='flex justify-between mb-10'>
-                <form className='flex gap-3'>
+        <div className='md:w-[80%] w-full md:px-8 md:pt-28 p-6 bg-LightGrayishBlue'>
+            <div className='flex flex-wrap justify-between w-full mb-10'>
+                <form className='flex flex-wrap gap-3'>
                     <input placeholder='Search...' type='text' className='py-2.5 px-4 rounded-md w-[306px] border-[1px] border-lightgrayBlue placeholder:text-DarkGrey placeholder:text-sm'></input>
                     <button style={{ border: "0.5px solid rgba(33, 56, 153, 0.6)", boxShadow: "0px 0px 6px 0px rgba(33, 56, 153, 0.16)" }} type='submit' className='py-2 px-[30px] rounded-md text-darkBlue text-sm'>Search</button>
                 </form>
-                <button style={{ border: "0.5px solid rgba(33, 56, 153, 0.6)", boxShadow: "0px 0px 6px 0px rgba(33, 56, 153, 0.16)" }} type='submit' className='py-2 px-[30px] rounded-md text-darkBlue text-sm' onClick={toggleForm}>Add item</button>
+                <button style={{ border: "0.5px solid rgba(33, 56, 153, 0.6)", boxShadow: "0px 0px 6px 0px rgba(33, 56, 153, 0.16)" }} type='submit' className='py-2 px-[30px] rounded-md text-darkBlue text-sm md:m-0 mt-2' onClick={toggleForm}>Add item</button>
             </div>
             <DataTable
                 customStyles={customStyles}

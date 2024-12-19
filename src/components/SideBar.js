@@ -9,7 +9,7 @@ const SideBar = () => {
     const icons = [shop, clipboard, money, setting]
     return (
         <>
-            <div className='flex flex-col space-y-2 w-[255px] mt-12'>
+            <div className='md:block hidden flex flex-col space-y-2 w-[17.75%] mt-12'>
                 {items.map((item, index) => (
                     <div key={index} className={`flex items-center py-4 px-10 gap-2 ${index === 0 ? "bg-veryPaleBlue" : ""}`}>
                         <img src={icons[index]} alt={`${icons[index]} icon`} className='w-[16px] h-[16px]' />

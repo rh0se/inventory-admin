@@ -6,16 +6,16 @@ import avatar from '../images/avatar.png'
 const NavBar = () => {
     return (
         <>
-            <nav className='px-6 py-4 flex'>
-                <div className="max-w-[204px] text-sm flex items-center border-[1px] border-brightGrey py-2 px-[15px] rounded-lg gap-2">
+            <nav className='px-6 py-4 flex justify-between'>
+                <div className="md:w-[204px] md:text-xs lg:text-sm flex items-center border-[1px] border-brightGrey md:py-2 md:px-[15px] p-1 rounded-lg gap-2">
                     <img src={Logo} alt="Logo" className='w-[51px] h-[12px]' />
                     <div>
-                        <h1 className='font-bold text-DarkSapphire'>Administrator</h1>
-                        <p className='text-xs text-desaturatedDarkBlue'>Super Admin</p>
+                        <h1 className='hidden md:block font-bold text-DarkSapphire'>Administrator</h1>
+                        <p className='hidden md:block text-xs text-desaturatedDarkBlue'>Super Admin</p>
                     </div>
                 </div>
-                <div className='w-10/12 ml-[64px] flex flex-row justify-between items-center'>
-                    <h1 className="text-DarkSapphire text-xl">Inventory</h1>
+                <div className='w-10/12 md:ml-[64px] ml-1 flex flex-row justify-between items-center'>
+                    <h1 className="text-DarkSapphire md:text-xl text-base">Inventory</h1>
                     <div className='flex w-[207px] justify-between items-center'>
                         <button style={{
                             boxShadow: "0px 0px 4px 0px rgba(53, 84, 209, 0.16)"

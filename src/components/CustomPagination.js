@@ -3,18 +3,20 @@ import ReactPaginate from "react-paginate";
 import next from '../images/next.png';
 
 
-const Pagination = ({ rowCount, rowsPerPageOptions = [13, 26,], onChangePage, onChangeRowsPerPage }) => {
+const Pagination = ({ rowCount, rowsPerPageOptions = [1, 13, 26,], onChangePage, onChangeRowsPerPage }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
 
     const totalPages = Math.ceil(rowCount / rowsPerPage);
 
     // Handle page change
-    const handlePageChange = (newPage) => {
+    const handlePageChange = ({ selected }) => {
+        const newPage = selected + 1; // Convert from 0-based to 1-based
         if (newPage < 1 || newPage > totalPages) return;
         setCurrentPage(newPage);
         if (onChangePage) onChangePage(newPage);
     };
+
 
     // Handle rows per page change
     const handleRowsPerPageChange = (event) => {
@@ -48,7 +50,7 @@ const Pagination = ({ rowCount, rowsPerPageOptions = [13, 26,], onChangePage, on
 
             {/* Page Navigation */}
             <div className="flex">
-                <button onClick={() => handlePageChange(1)}
+                <button onClick={() => handlePageChange(0)}
                     disabled={currentPage === 1} // Disable on the first page
                     className={`text-xs bg-white border border-[#E5EBF0] px-2 text-[#576378] rounded ${currentPage === 1 ? "" : ""
                         }`}>First</button>
@@ -57,7 +59,7 @@ const Pagination = ({ rowCount, rowsPerPageOptions = [13, 26,], onChangePage, on
                     breakLabel="..."
                     nextLabel={<img src={next} className={`${currentPage === totalPages ? "pagination-disabled" : "text-[#6D7D93]"}`} />}
                     pageCount={totalPages}
-                    onPageChange={handlePageChange}
+                    onPageChange={({ selected }) => handlePageChange({ selected })}
                     pageRangeDisplayed={2}
                     marginPagesDisplayed={2}
                     activeClassName={"active"}
